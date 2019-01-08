@@ -6,7 +6,7 @@ var path = require('path');//Importar libreria path
 
 var app = express();//Instanciar framewok express a una varible 
 
-// cargar rutas de la carpeta ./routes
+// cargar rutas (directorio ./routes)
 var ge_routes = require('./routes/ge');//Importar archivo ge.js 
 var user_routes = require('./routes/user');//Importar archivo user.js
 var ge_component_routes = require('./routes/ge_componets');//Importar archivo ge_componets.js
