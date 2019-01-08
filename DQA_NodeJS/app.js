@@ -1,19 +1,20 @@
 'use strict'
 
-var express = require('express');
-var bodyParser = require('body-parser');
-var path = require('path');
+var express = require('express');//Importar framework de express 
+var bodyParser = require('body-parser');//Importar libreria body-parser
+var path = require('path');//Importar libreria path 
 
-var app = express();
+var app = express();//Instanciar framewok express a una varible 
 
-// cargar rutas
-var ge_routes = require('./routes/ge');
-var user_routes = require('./routes/user');
-var ge_component_routes = require('./routes/ge_componets');
-var test = require('./routes/ge_test');
+// cargar rutas de la carpeta ./routes
+var ge_routes = require('./routes/ge');//Importar archivo ge.js 
+var user_routes = require('./routes/user');//Importar archivo user.js
+var ge_component_routes = require('./routes/ge_componets');//Importar archivo ge_componets.js
+var test = require('./routes/ge_test');//Importar archivo ge_test.js
+
 // middlewares
-app.use(bodyParser.urlencoded({extended:false}));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:false}));//Configuracion necesaria para la libreria body-parser
+app.use(bodyParser.json());//Convierte la peticion a un objeto JSON
 
 // cors configurar cabeceras http
 app.use((req, res, next) => {
