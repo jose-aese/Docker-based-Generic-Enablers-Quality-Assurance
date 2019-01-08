@@ -16,3 +16,5 @@ mongoose.connect('mongodb://localhost:27017/ge_docker'/*,{useNewUrlParser:true}*
             });
         })
         .catch(err => console.log(err)); //Si hubo un error en la conexión se retorna el error obtenido
+
+//esto es un comentario
