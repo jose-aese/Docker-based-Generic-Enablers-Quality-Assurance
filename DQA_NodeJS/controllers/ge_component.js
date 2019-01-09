@@ -24,7 +24,7 @@ function saveGeComponent(req, res){
         
         // control de ge_component duplicado
         ge_component.find(
-            //Consulta a la colección (ges) de la base de datos (ge_docker) para verificar que no exista el nuevo GE 
+            //Consulta a la colección (ge_components) de la base de datos (ge_docker) para verificar que no exista el nuevo GE 
             {ge: ge_comp.ge.toLowerCase()}
             //El resultado de la consulta se guarda en la varible (ges_comp).
         ).exec((err, ges_comp) => {
@@ -36,7 +36,7 @@ function saveGeComponent(req, res){
                 //Si existe dato en (ges_comp) signifiaca que ya existe el GE, se retornara un mensaje al usuario
                 return res.status(500).send({message:'El GE component ya existe'});
             }else{
-                //Función para guardar objeto (ge_comp) en la colección (ges). 
+                //Función para guardar objeto (ge_comp) en la colección (ge_components). 
                 ge_comp.save((err, ge_compStored) => {//Retorna un (err) o un objeto (ge_compStored).
                     //Si ocurre algún error durante el proceso de guardar el objeto se retornara el error obtenido. 
                     if(err) return res.status(500).send({message:'error al guardar GE component'});
@@ -52,7 +52,7 @@ function saveGeComponent(req, res){
                 });
             }
         });
-    //Retornar mensaje pidiendo al usuario que ingrese todos los parametros necesarios    
+    //Retornar mensaje pidiendo al usuario que ingrese todos los parametros necesarios.    
     }else{
         res.status(200).send({
             message:'Envia todos los campos necesarios!!!'
@@ -62,9 +62,11 @@ function saveGeComponent(req, res){
 
 //Obtener datos de los componentes  
 function getComponets(req, res){
+    //Función que hace una consulta de todos los documentos a la colección (ges).
     ge_component.find({}).select({'_id':0}).exec((err, components)=>{
+        //Si ocurre algún error durante la consulta se retornara el error obtenido.
         if(err) return res.status(500).send({message:'Error en la petición'});
-
+        //Si no ocurre ningun errror se retorna todos los documentos en encontrados en la colección (ge_components)
         return res.status(200).send({components});
     });
 }
