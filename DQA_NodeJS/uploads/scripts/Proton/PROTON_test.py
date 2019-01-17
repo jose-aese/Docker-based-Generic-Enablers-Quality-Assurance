@@ -21,24 +21,25 @@ class geoserver(unittest.TestCase):
         date = strftime('%y-%m-%d') #Fecha de ejecucion
         hour = strftime('%H:%M:%S') #Hora de ejecucion
         host_name = os.popen('hostname').readline().rstrip('\n') #Nombre del Host de ejecucion
-
+        
         os.chdir('docker')
         os.system('docker build -t fiware/proton .') #Creacion de la imagen mediante el Dockerfile
         os.system('docker run --name proton -p 8080:8080 -it -d fiware/proton') # creacion del contenedor
         
         info = os.popen('docker ps -f "name=proton"') #Extraer la informacion del estado del contenedor
         container_info = info.readlines() #Gaurdar informacion en arreglo
-        print(container_info)
-        print(container_info[1].split()[0])
-        containerID = container_info[1].split()[0] #Extraer el conytainer id del arreglo
-        containerStatus = container_info[1].split()[6] #Extraer el Status del arreglo
-        
+        info_split = container_info[1].split()
+        numtotal = 0
+        for can in info_split:
+            numtotal += 1
+        containerID =  info_split[0] #Extraer el conytainer id del arreglo
+        containerStatus = 'error'
+        for can in info_split:
+            if can == 'Up':
+                containerStatus = 'Up'	
         time.sleep(5)
         server_response= os.popen('curl -I http://localhost:8080/AuthoringTool/Main.html').readline() #Respuesta por parte del servidor dentro del contenedor
-        print (server_response)
-
         containerName = os.popen('docker rm proton -f').readline().rstrip('\n') #Detener contenedor y guardar su nombre        
-
         test_info =[host_name,date,hour,version,containerStatus,containerID,containerName] #Guardar valores obtenidos del test en arreglo
         print (test_info)    
 
