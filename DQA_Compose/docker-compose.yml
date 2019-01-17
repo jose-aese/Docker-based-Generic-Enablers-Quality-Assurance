@@ -1,8 +1,0 @@
-fiware_report: 
-  image: mongo
-  container_name: fiware_report
-  volumes: 
-    - ./fiware_report:/data/db
-  ports: 
-    - 27017:27017
-  #command: bash -c "mongoimport --db report_fiware --collection fiware --file report.json"
