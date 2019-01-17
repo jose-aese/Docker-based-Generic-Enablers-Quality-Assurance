@@ -22,9 +22,12 @@ class aeon(unittest.TestCase):
         host_name = os.popen('hostname').readline().rstrip('\n')
         
         container_info = os.popen('docker ps -f "name=AERON"').readlines()
-        container_id = container_info[1].split()[0]
-        container_status = container_info[1].split()[6]
-
+        info_split = container_info[1].split()
+        container_status = 'error'
+        for can in info_split:
+            if can == 'Up':
+                container_status = 'Up'
+        container_id =  info_split[0]
         time.sleep(20)
         os.system('curl 127.0.0.1:8060/sanityCheck')
         container_name = os.popen('docker rm AERON -f').readline().rstrip('\n')    
